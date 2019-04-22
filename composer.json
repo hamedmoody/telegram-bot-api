@@ -9,10 +9,7 @@
             "email": "hamedmoodi2011@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
-    "require": {
-    	"php": ">=5.3.0"
-    },
+    "require": {},
     "autoload": {
         "psr-4": {
             "HamedMoody\\TelegramBotApi\\": "src/"
