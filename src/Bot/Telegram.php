@@ -6,12 +6,19 @@
  * Time: 11:11 PM
  */
 
-class Telegram
+namespace HamedMoody\TelegramBotApi\Bot;
+
+use HamedMoody\TelegramBotApi\Interfaces\TelegramInterface;
+use HamedMoody\TelegramBotApi\Http\Curl;
+
+class Telegram implements TelegramInterface
 {
+
+    private $baseUrl;
 
     private $token;
 
-    private $baseUrl;
+    private $curl;
 
     public function __construct( $token )
     {
@@ -20,6 +27,20 @@ class Telegram
 
         $this->baseUrl  = 'https://api.telegram.org/bot' . $token . '/';
 
+        $this->curl     = new Curl();
+
     }
 
+
+    public function sendMessage( $params )
+    {
+
+        $this->curl->post(
+            $this->baseUrl . 'sendMessage',
+            array(),
+            $params
+        );
+
+        // TODO: Implement sendMessage() method.
+    }
 }

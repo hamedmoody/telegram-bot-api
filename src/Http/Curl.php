@@ -11,7 +11,7 @@ namespace HamedMoody\TelegramBotApi\Http;
 class Curl
 {
 
-    private $request;
+    private $request = null;
 
     private $info;
 
@@ -19,13 +19,13 @@ class Curl
 
     public function post(
         $url,
-        array $urlParameters = [],
-        array $postParameters = [],
-        array $headers = [],
+        array $urlParameters = array(),
+        array $postParameters = array(),
+        array $headers = array(),
         $asJSON = false
     ){
 
-        $this->request = curl_init();
+        $this->init( $url, $headers );
 
         /**
          * If post parameter has been set request type is Post
@@ -41,7 +41,6 @@ class Curl
             curl_setopt( $this->request, CURLOPT_POSTFIELDS, http_build_query( $postParameters ) );
         }
 
-        $this->init();
 
         $body               = curl_exec( $this->request );
 
@@ -57,6 +56,24 @@ class Curl
 
     public function getStatusCode() {
         return $this->statusCode;
+    }
+
+    public function reset(){
+        $this->request = null;
+    }
+
+    private function init( $url, $headers = array() ){
+
+        $this->request = curl_init();
+
+        curl_setopt( $this->request, CURLOPT_URL, $url );
+
+        curl_setopt( $this->request, CURLOPT_RETURNTRANSFER, TRUE );
+
+        if( count( $headers ) ){
+            curl_setopt( $this->request, CURLOPT_HTTPHEADER, $headers );
+        }
+
     }
 
 }
